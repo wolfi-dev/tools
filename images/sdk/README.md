@@ -1,21 +1,13 @@
-<!--monopod:start-->
 # sdk
-| | |
-| - | - |
-| **Status** | stable |
-| **OCI Reference** | `cgr.dev/chainguard/sdk` |
-| **Variants/Tags** | ![](https://storage.googleapis.com/chainguard-images-build-outputs/summary/sdk.svg) |
----
-<!--monopod:end-->
 
 Development image for [melange](https://github.com/chainguard-dev/melange) and [apko](https://github.com/chainguard-dev/apko).
 
 ## Get It!
 
-The image is available on `cgr.dev`:
+The image is available on `ghcr.io`:
 
 ```
-docker pull cgr.dev/chainguard/sdk:latest
+docker pull ghcr.io/wolfi-dev/sdk:latest
 ```
 
 ## Usage
@@ -32,7 +24,7 @@ cd melange
 Run the image, mounting the repo workspace (`--privileged` flag required):
 
 ```
-docker run --privileged --rm -it -v "${PWD}:${PWD}" -w "${PWD}" cgr.dev/chainguard/sdk
+docker run --privileged --rm -it -v "${PWD}:${PWD}" -w "${PWD}" ghcr.io/wolfi-dev/sdk
 ```
 
 Upon entering the image, you should see the following welcome message:
@@ -77,7 +69,7 @@ cd apko
 Run the image, mounting the repo workspace:
 
 ```
-docker run --rm -it -v "${PWD}:${PWD}" -w "${PWD}" cgr.dev/chainguard/sdk
+docker run --rm -it -v "${PWD}:${PWD}" -w "${PWD}" ghcr.io/wolfi-dev/sdk
 ```
 
 Upon entering the image, you should see the following welcome message:
