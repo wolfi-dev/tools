@@ -7,9 +7,12 @@ contents:
   packages:
     - ca-certificates-bundle
     - wolfi-baselayout
-    - sdk
+    - wolfictl
+
 entrypoint:
-  command: /usr/bin/sdk
+  command: /usr/bin/wolfictl
+
+command: -h
 
 archs:
   - x86_64

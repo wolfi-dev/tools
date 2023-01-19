@@ -1,0 +1,7 @@
+ref: ghcr.io/wolfi-dev/wolfictl
+versions:
+  - melange:
+      configs:
+        - configs/latest.melange.yaml
+    apko:
+      config: configs/latest.apko.yaml
