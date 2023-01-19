@@ -3,11 +3,11 @@ contents:
     - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
   repositories:
     - https://packages.wolfi.dev/os
-    - '@local /github/workspace/packages'
+    - /github/workspace/packages
   packages:
     - ca-certificates-bundle
     - wolfi-baselayout
-    - wolfictl@local
+    - wolfictl
 
 entrypoint:
   command: /usr/bin/wolfictl
