@@ -4,7 +4,7 @@ Various tools, images, etc.
 
 ## Images
 
-### SDK
+### sdk
 
 The [sdk](./images/sdk) image contains melange, apko,
 and other tools such as Go needed to build these projects.
@@ -14,4 +14,13 @@ to build Wolfi packages for ARM etc.
 
 ```
 ghcr.io/wolfi-dev/sdk:latest
+```
+
+### wolfi
+
+The [wolfictl](./images/wolfictl) image contains
+[wolfictl](https://github.com/wolfi-dev/wolfictl).
+
+```
+ghcr.io/wolfi-dev/wolfictl:latest
 ```
