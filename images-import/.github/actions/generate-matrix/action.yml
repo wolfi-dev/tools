@@ -1,0 +1,43 @@
+name: generate-matrix
+outputs:
+  matrix:
+    value: ${{ steps.generate-matrix.outputs.matrix }}
+  matrix-unique-images:
+    value: ${{ steps.generate-matrix.outputs.matrix-unique-images }}
+inputs:
+  repository:
+    default: ${{ github.repository }}
+  token:
+    default: ${{ github.token }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+        path: monopod-setup-gha
+    - uses: actions/setup-go@v3
+      with:
+        go-version: 1.19
+    - id: monopod
+      shell: bash
+      run: |
+        set -x
+        (cd monopod-setup-gha/monopod/ && go build -o /tmp/bin/monopod monopod.go)
+        rm -rf monopod-setup-gha/
+    - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
+    - id: generate-matrix
+      shell: bash
+      run: |
+        set -x
+        export PATH="/tmp/bin:${PATH}"
+        echo "matrix=$(monopod matrix --modified-files=${{ inputs.modified-files }} --melange-mode=${{ inputs.melange-mode }})" >> $GITHUB_OUTPUT
+        echo "matrix-unique-images=$(monopod matrix --modified-files=${{ inputs.modified-files }} --melange-mode=${{ inputs.melange-mode }} --unique-images)" >> $GITHUB_OUTPUT
+    - name: Touch actions file to prevent postrun failure
+      if: always()
+      shell: bash
+      run: |
+        set -x && [[ -f .github/actions/generate-matrix/action.yml ]] || ( \
+          mkdir -p .github/actions/generate-matrix/ && echo 'runs: {using: composite, steps: []}' > .github/actions/generate-matrix/action.yml )
