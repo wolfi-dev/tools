@@ -1,6 +1,10 @@
 # tools
 
-Various tools, images, etc.
+Various tools, images, etc. to support the Wolfi OSS project
+
+- [Images](#images)
+  - [sdk](#sdk)
+  - [wolfictl](#wolfictl)
 
 ## Images
 
