@@ -1,3 +1,4 @@
+ref: ghcr.io/wolfi-dev/apko
 versions:
   - melange:
       configs:

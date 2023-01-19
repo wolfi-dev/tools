@@ -1,3 +1,4 @@
+ref: ghcr.io/wolfi-dev/melange
 versions:
   - melange:
       configs:
