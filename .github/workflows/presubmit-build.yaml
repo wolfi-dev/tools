@@ -1,0 +1,39 @@
+on:
+  pull_request:
+jobs:
+  presubmit-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+    - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
+    - id: files
+      uses: jitterbit/get-changed-files@b17fbb00bdc0c0f63fcf166580804b4d2cdc2a42 # v1
+      with:
+        format: csv
+    - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
+      with:
+        repository: chainguard-images/images
+    - id: generate-matrix
+      uses: ./.github/actions/generate-matrix
+      with:
+        modified-files: ${{ steps.files.outputs.all }}
+        repository: chainguard-images/images
+  presubmit-build:
+    runs-on: ubuntu-latest
+    needs: presubmit-matrix
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.presubmit-matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
+        with:
+          repository: chainguard-images/images
+      - uses: ./.github/actions/build-image
+        with: ${{ matrix }}
+  presubmit-roundup:
+    runs-on: ubuntu-latest
+    needs: presubmit-build
+    steps:
+      - run: |
+          echo "all matrix jobs completed"
