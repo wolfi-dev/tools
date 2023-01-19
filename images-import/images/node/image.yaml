@@ -1,5 +1,0 @@
-versions:
-  - apko:
-      extractTagsFrom:
-        package: nodejs
-      config: configs/latest.apko.yaml
