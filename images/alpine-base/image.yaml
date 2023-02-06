@@ -1,0 +1,4 @@
+ref: ghcr.io/wolfi-dev/alpine-base
+versions:
+  - apko:
+      config: configs/latest.apko.yaml
