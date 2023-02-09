@@ -13,6 +13,7 @@ package:
   dependencies:
     runtime:
       - git
+      - glibc
 
 environment:
   contents:
