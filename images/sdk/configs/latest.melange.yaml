@@ -15,8 +15,8 @@ package:
       - apk-tools
       - make
       - go
-      - git
-      - curl
+      - git<2.39
+      - curl<7.88.0
       - bash
       - busybox
       - bubblewrap
