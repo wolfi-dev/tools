@@ -10,6 +10,7 @@ contents:
     - coreutils
     - bash
     - busybox
+    - gitsign
 
 entrypoint:
   command: /usr/bin/wolfictl
