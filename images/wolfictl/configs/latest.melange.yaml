@@ -7,7 +7,7 @@ package:
     - all
   copyright:
     - paths:
-      - "*"
+        - "*"
       attestation: TODO
       license: Apache-2.0
   dependencies:
