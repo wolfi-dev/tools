@@ -11,6 +11,7 @@ contents:
     - bash
     - busybox
     - gitsign
+    - make
 
 entrypoint:
   command: /usr/bin/wolfictl
