@@ -12,6 +12,7 @@ contents:
     - busybox
     - gitsign
     - make
+    - graphviz
 
 entrypoint:
   command: /usr/bin/wolfictl
