@@ -16,7 +16,7 @@ jobs:
       id-token: write
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: chainguard-dev/actions/digesta-bot@main
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - uses: chainguard-dev/actions/digesta-bot@main
+        with:
+          token: ${{ secrets.DIGEST_BOT_WOLFI_PAT }}
