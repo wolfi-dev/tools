@@ -60,5 +60,9 @@ pipeline:
       git clone https://github.com/chainguard-dev/apko.git
       (cd apko && make apko install)
 
+      # wolfictl
+      git clone https://github.com/wolfi-dev/wolfictl.git
+      (cd wolfictl && make wolfictl install)
+
       # sdk entrypoint
       cp mount/entrypoint.sh "${DESTDIR}/usr/bin/sdk"
