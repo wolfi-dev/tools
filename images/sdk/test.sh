@@ -18,4 +18,5 @@ docker run --rm --entrypoint bash "${IMAGE_NAME}" -xc \
      apk --version &&
      bwrap --version &&
      melange version &&
-     apko version'
+     apko version &&
+     wolfictl version'
