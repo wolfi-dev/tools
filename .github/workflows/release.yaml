@@ -47,7 +47,7 @@ jobs:
         with:
           repository: chainguard-images/images
           modified-files: ${{ steps.files.outputs.all }}
-      
+
       # For manual builds, build only the image requested
       - id: generate-matrix-manual
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.only != '' }}
