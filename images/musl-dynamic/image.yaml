@@ -1,3 +1,4 @@
+ref: ghcr.io/wolfi-dev/musl-dynamic
 versions:
   - apko:
       config: configs/latest.apko.yaml
