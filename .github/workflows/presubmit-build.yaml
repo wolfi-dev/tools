@@ -19,6 +19,7 @@ jobs:
       with:
         modified-files: ${{ steps.files.outputs.all }}
         repository: chainguard-images/images
+        defaultRegistryOverride: ghcr.io/wolfi-dev
   presubmit-build:
     runs-on: ubuntu-latest
     needs: presubmit-matrix

@@ -39,6 +39,7 @@ jobs:
         uses: ./.github/actions/generate-matrix
         with:
           repository: chainguard-images/images
+          defaultRegistryOverride: ghcr.io/wolfi-dev
 
       # On push to main branch, only build images necessary
       - id: generate-matrix-main
@@ -47,6 +48,7 @@ jobs:
         with:
           repository: chainguard-images/images
           modified-files: ${{ steps.files.outputs.all }}
+          defaultRegistryOverride: ghcr.io/wolfi-dev
 
       # For manual builds, build only the image requested
       - id: generate-matrix-manual
@@ -55,6 +57,7 @@ jobs:
         with:
           repository: chainguard-images/images
           modified-files: images/${{ inputs.only }}/image.yaml
+          defaultRegistryOverride: ghcr.io/wolfi-dev
 
       # Generate the final matrix for build based on the above
       - id: generate-matrix
