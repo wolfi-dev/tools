@@ -1,8 +1,0 @@
-ref: ghcr.io/wolfi-dev/sdk
-versions:
-  - melange:
-      mount: true
-      configs:
-        - configs/latest.melange.yaml
-    apko:
-      config: configs/latest.apko.yaml

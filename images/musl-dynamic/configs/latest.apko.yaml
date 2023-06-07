@@ -1,8 +1,6 @@
 contents:
-  repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/edge/main
   packages:
     - alpine-baselayout-data
-    - alpine-release
+    - alpine-release==3 # TODO: unlock this, some issue using terraform
     - ca-certificates-bundle
-    - musl
+    - musl==1 # TODO: unlock this, some issue using terraform

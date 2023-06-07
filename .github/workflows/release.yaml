@@ -18,58 +18,13 @@ jobs:
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
-
-      # On push to main branch, only build images necessary
       - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-      - id: files
-        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-        uses: jitterbit/get-changed-files@b17fbb00bdc0c0f63fcf166580804b4d2cdc2a42 # v1
-        with:
-          format: csv
-
-      # Checkout public repo to get actions
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-        with:
-          repository: chainguard-images/images
-
-      # For nightly builds, build every image
-      - id: generate-matrix-schedule
-        if: ${{ github.event_name == 'schedule' || ( github.event_name == 'workflow_dispatch' && inputs.only == '' ) }}
-        uses: ./.github/actions/generate-matrix
-        with:
-          repository: chainguard-images/images
-
-      # On push to main branch, only build images necessary
-      - id: generate-matrix-main
-        if: ${{ github.event_name != 'schedule' && github.event_name != 'workflow_dispatch' }}
-        uses: ./.github/actions/generate-matrix
-        with:
-          repository: chainguard-images/images
-          modified-files: ${{ steps.files.outputs.all }}
-
-      # For manual builds, build only the image requested
-      - id: generate-matrix-manual
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.only != '' }}
-        uses: ./.github/actions/generate-matrix
-        with:
-          repository: chainguard-images/images
-          modified-files: images/${{ inputs.only }}/image.yaml
-
-      # Generate the final matrix for build based on the above
       - id: generate-matrix
         run: |
           set -x
-          trap "rm -f matrix.json matrix-unique-images.json" EXIT
-          echo '${{ steps.generate-matrix-manual.outputs.matrix }}' > matrix.json
-          [[ "$(cat matrix.json)" != "" ]] || echo '${{ steps.generate-matrix-schedule.outputs.matrix }}' > matrix.json
-          [[ "$(cat matrix.json)" != "" ]] || echo '${{ steps.generate-matrix-main.outputs.matrix }}' > matrix.json
-          echo "matrix=$(cat matrix.json)" >> $GITHUB_OUTPUT
-          echo '${{ steps.generate-matrix-manual.outputs.matrix-unique-images }}' > matrix-unique-images.json
-          [[ "$(cat matrix-unique-images.json)" != "" ]] || echo '${{ steps.generate-matrix-schedule.outputs.matrix-unique-images }}' > matrix-unique-images.json
-          [[ "$(cat matrix-unique-images.json)" != "" ]] || echo '${{ steps.generate-matrix-main.outputs.matrix-unique-images }}' > matrix-unique-images.json
-          echo "matrix-unique-images=$(cat matrix-unique-images.json)" >> $GITHUB_OUTPUT
-
+          # TODO: set ONLY env var based on changed files
+          matrix="$(ONLY="${{ inputs.only }}" ./hack/matrix.sh)"
+          echo "matrix=${matrix}" >> $GITHUB_OUTPUT
   build:
     runs-on: ubuntu-latest
     needs: generate-matrix
@@ -81,24 +36,44 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      # Setup required tooling etc.
+      - name: Setup QEMU
+        if: ${{ matrix.melangeConfig != '' }}
+        uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7 # v2.2.0
+      - uses: hashicorp/setup-terraform@v2
         with:
-          repository: chainguard-images/images
-      - name: Add additional inputs
-        id: augmented-inputs
-        env:
-          EXTRA_INPUT_APKO_IMAGE: ghcr.io/wolfi-dev/apko:latest@sha256:94c1512d9c359148059a13cb8df972d15f196e5901f0132238d0376e0bfb597c
+          terraform_version: '1.3.*'
+          terraform_wrapper: false
+
+      # Checkout this repo's source code
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      # Build custom package using melange (if specified)
+      - id: melange
+        if: ${{ matrix.melangeConfig != '' }}
+        uses: chainguard-dev/actions/melange-build@main
+        with:
+          multi-config: ${{ matrix.melangeConfig }}
+          empty-workspace: false
+          workdir: images/${{ matrix.imageName }}
+          sign-with-temporary-key: true
+          archs: x86_64,aarch64
+
+      # Auth to GitHub Container Registry (ghcr.io)
+      - name: Login to registry
         run: |
-          # convert env vars beginning with "EXTRA_INPUT_"
-          # to camelcased input variables passed to next step
           set -x
-          echo '${{ toJSON(matrix) }}' > inputs.json
-          for kv in `env | grep '^EXTRA_INPUT_' | sed 's/^EXTRA_INPUT_//'`; do
-            k="$(echo "${kv}" | cut -d "=" -f1 | tr '[:upper:]' '[:lower:]' | sed -r 's/(.)_+(.)/\1\U\2/g;s/^[a-z]/\U&/' | sed 's/.*/\l&/')"
-            v="$(echo "${kv}" | cut -d "=" -f2)"
-            cat inputs.json | jq -c '. + {'${k}': "'${v}'"}' > inputs.json.tmp
-            mv inputs.json.tmp inputs.json
-          done
-          echo "augmented-inputs=$(cat inputs.json | tr -d '\n')" >> $GITHUB_OUTPUT
-      - uses: ./.github/actions/release-image
-        with: ${{ fromJSON(steps.augmented-inputs.outputs.augmented-inputs) }}
+          echo "${{ github.token }}" | docker login \
+            -u "${{ github.repository_owner }}" \
+            --password-stdin ghcr.io
+
+      # Build and push image using terraform-provider-apko
+      - name: Build image with apko/terraform
+        env:
+          TF_VAR_target_repository: ghcr.io/${{ github.repository_owner }}/${{ matrix.imageName }}
+        run: |
+          set -x
+          cd images/${{ matrix.imageName }}/
+          terraform init
+          terraform apply -auto-approve

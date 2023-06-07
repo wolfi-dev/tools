@@ -1,12 +1,10 @@
 contents:
-  repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/edge/main
   packages:
     - ca-certificates-bundle
     - alpine-baselayout-data
-    - alpine-release
+    - alpine-release==3
     - gcc
-    - musl-dev
+    - musl-dev==1
     - busybox
 
 paths:
