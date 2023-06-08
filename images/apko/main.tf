@@ -31,5 +31,5 @@ resource "oci_tag" "version-tags" {
   depends_on = [ module.test-latest ]
   for_each   = toset(["latest"])
   digest_ref = module.latest.image_ref
-  tag        = "${each.key}"
+  tag        = each.key
 }

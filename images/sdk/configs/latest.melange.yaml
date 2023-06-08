@@ -22,7 +22,6 @@ package:
       - bubblewrap
       - tree
       - alpine-keys
-      - grype
 
 environment:
   contents:

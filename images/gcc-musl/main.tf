@@ -11,15 +11,13 @@ variable "target_repository" {
 
 provider "apko" {
   extra_repositories = ["https://dl-cdn.alpinelinux.org/alpine/edge/main"]
-  extra_keyring      = []
-  default_archs      = ["386", "amd64", "arm64", "arm/v6", "arm/v7", "ppc64le", "riscv64", "s390x"]
 }
 
 module "latest" {
   source            = "../../tflib/publisher"
   target_repository = var.target_repository
   config            = file("${path.module}/configs/latest.apko.yaml")
-  extra_packages    = []
+  extra_packages    = [] # The default pulls in wolfi-baselayout which cannot be used in alpine
 }
 
 module "test-latest" {
@@ -37,5 +35,5 @@ resource "oci_tag" "version-tags" {
   depends_on = [ module.test-latest ]
   for_each   = toset(concat(["latest"], module.version-tags.tag_list))
   digest_ref = module.latest.image_ref
-  tag        = "${each.key}"
+  tag        = each.key
 }

@@ -1,6 +1,6 @@
 contents:
   packages:
     - alpine-baselayout-data
-    - alpine-release==3 # TODO: unlock this, some issue using terraform
+    - alpine-release==3 # TODO(#33): unlock this
     - ca-certificates-bundle
-    - musl==1 # TODO: unlock this, some issue using terraform
+    - musl==1 # TODO(#33): unlock this
