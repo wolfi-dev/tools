@@ -11,6 +11,7 @@ variable "target_repository" {
 
 provider "apko" {
   extra_repositories = ["https://dl-cdn.alpinelinux.org/alpine/edge/main"]
+  default_archs      = ["386", "amd64", "arm64", "arm/v6", "arm/v7", "ppc64le", "riscv64", "s390x"]
 }
 
 module "latest" {
