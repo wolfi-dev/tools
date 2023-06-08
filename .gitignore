@@ -1,0 +1,7 @@
+**/.terraform*
+**/terraform*
+**/melange.rsa*
+**/packages/
+**/*.tar
+**/*.cdx
+**/*.spdx.json

@@ -1,8 +1,6 @@
 contents:
-  repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/edge/main
   packages:
     - alpine-baselayout-data
-    - alpine-release
+    - alpine-release==3 # TODO(#33): unlock this
     - ca-certificates-bundle
-    - musl
+    - musl==1 # TODO(#33): unlock this

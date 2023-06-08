@@ -6,50 +6,76 @@ jobs:
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
     steps:
-    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-    - id: files
-      uses: jitterbit/get-changed-files@b17fbb00bdc0c0f63fcf166580804b4d2cdc2a42 # v1
-      with:
-        format: csv
-    - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
-      with:
-        repository: chainguard-images/images
-    - id: generate-matrix
-      uses: ./.github/actions/generate-matrix
-      with:
-        modified-files: ${{ steps.files.outputs.all }}
-        repository: chainguard-images/images
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - id: generate-matrix
+        run: |
+          set -x
+          # TODO: set ONLY env var based on changed files
+          matrix="$(ONLY="${{ inputs.only }}" ./hack/matrix.sh)"
+          echo "matrix=${matrix}" >> $GITHUB_OUTPUT
+
   presubmit-build:
     runs-on: ubuntu-latest
     needs: presubmit-matrix
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.presubmit-matrix.outputs.matrix) }}
+    permissions:
+      id-token: write
+      packages: write
+      contents: read
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      # Setup required tooling etc.
+      - name: Setup QEMU
+        if: ${{ matrix.melangeConfig != '' }}
+        uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7 # v2.2.0
+      - uses: hashicorp/setup-terraform@v2
         with:
-          repository: chainguard-images/images
-      - name: Add additional inputs
-        id: augmented-inputs
+          terraform_version: '1.3.*'
+          terraform_wrapper: false
+
+      # Checkout this repo's source code
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      # Build custom package using melange (if specified)
+      - id: melange
+        if: ${{ matrix.melangeConfig != '' }}
+        uses: chainguard-dev/actions/melange-build@main
+        with:
+          multi-config: ${{ matrix.melangeConfig }}
+          empty-workspace: false
+          workdir: images/${{ matrix.imageName }}
+          sign-with-temporary-key: true
+          archs: x86_64,aarch64
+
+      # Setup local registry
+      - uses: chainguard-dev/actions/setup-registry@main
+        with:
+          port: 5000
+
+      # Build and push image using terraform-provider-apko
+      - name: Build image with apko/terraform
         env:
-          EXTRA_INPUT_APKO_IMAGE: ghcr.io/wolfi-dev/apko:latest@sha256:94c1512d9c359148059a13cb8df972d15f196e5901f0132238d0376e0bfb597c
+          TF_VAR_target_repository: localhost:5000/${{ matrix.imageName }}
         run: |
-          # convert env vars beginning with "EXTRA_INPUT_"
-          # to camelcased input variables passed to next step
           set -x
-          echo '${{ toJSON(matrix) }}' > inputs.json
-          for kv in `env | grep '^EXTRA_INPUT_' | sed 's/^EXTRA_INPUT_//'`; do
-            k="$(echo "${kv}" | cut -d "=" -f1 | tr '[:upper:]' '[:lower:]' | sed -r 's/(.)_+(.)/\1\U\2/g;s/^[a-z]/\U&/' | sed 's/.*/\l&/')"
-            v="$(echo "${kv}" | cut -d "=" -f2)"
-            cat inputs.json | jq -c '. + {'${k}': "'${v}'"}' > inputs.json.tmp
-            mv inputs.json.tmp inputs.json
-          done
-          echo "augmented-inputs=$(cat inputs.json | tr -d '\n')" >> $GITHUB_OUTPUT
-      - uses: ./.github/actions/build-image
-        with: ${{ fromJSON(steps.augmented-inputs.outputs.augmented-inputs) }}
+          cd images/${{ matrix.imageName }}/
+          terraform init
+          terraform apply -auto-approve
+
   presubmit-roundup:
+    needs:
+      - presubmit-build
     runs-on: ubuntu-latest
-    needs: presubmit-build
+    if: always()
     steps:
-      - run: |
-          echo "all matrix jobs completed"
+      - uses: technote-space/workflow-conclusion-action@45ce8e0eb155657ab8ccf346ade734257fd196a5 # v3.0.3
+
+      - if: ${{ env.WORKFLOW_CONCLUSION == 'success' }}
+        working-directory: /tmp
+        run: echo ${{ env.WORKFLOW_CONCLUSION }} && exit 0
+
+      - if: ${{ env.WORKFLOW_CONCLUSION == 'failure' }}
+        working-directory: /tmp
+        run: echo ${{ env.WORKFLOW_CONCLUSION }} && exit 1

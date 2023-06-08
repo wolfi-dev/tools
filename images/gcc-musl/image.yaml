@@ -1,6 +1,0 @@
-ref: ghcr.io/wolfi-dev/gcc-musl
-versions:
-  - apko:
-      config: configs/latest.apko.yaml
-      extractTagsFrom:
-        package: gcc

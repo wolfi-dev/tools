@@ -1,8 +1,4 @@
 contents:
-  keyring:
-    - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
-  repositories:
-    - https://packages.wolfi.dev/os
   packages:
     - ca-certificates-bundle
     - wolfi-baselayout
@@ -18,7 +14,3 @@ entrypoint:
   command: /usr/bin/wolfictl
 
 command: -h
-
-archs:
-  - x86_64
-  - aarch64
