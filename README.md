@@ -40,6 +40,15 @@ The [melange](./images/melange) image contains
 ghcr.io/wolfi-dev/melange:latest
 ```
 
+### wolfi-base
+
+The [wolfi-base](./images/wolfi-base) image contains
+the `wolfi-base` package (which provides `busybox` and `apk`).
+
+```
+ghcr.io/wolfi-dev/wolfi-base:latest
+```
+
 ### wolfictl
 
 The [wolfictl](./images/wolfictl) image contains
