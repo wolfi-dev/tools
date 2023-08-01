@@ -45,6 +45,12 @@ ghcr.io/wolfi-dev/melange:latest
 The [wolfi-base](./images/wolfi-base) image contains
 the `wolfi-base` package (which provides `busybox` and `apk`).
 
+on Docker Hub:
+```
+wolfios/wolfi-base:latest
+```
+
+on GHCR:
 ```
 ghcr.io/wolfi-dev/wolfi-base:latest
 ```

@@ -12,6 +12,8 @@ on:
         required: false
         default: ''
 concurrency: release
+env:
+  WOLFIOS_DOCKERHUB_USER: wolfios
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
@@ -75,5 +77,29 @@ jobs:
         run: |
           set -x
           cd images/${{ matrix.imageName }}/
+          terraform init
+          terraform apply -auto-approve
+
+      # wolfi-base only:
+      # Auth to Docker Hub (docker.io)
+      - name: Login to registry
+        if: matrix.imageName == 'wolfi-base'
+        run: |
+          set -x
+          echo "${{ secrets.WOLFIOS_DOCKERHUB_PAT }}" | docker login \
+            -u "${{ env.WOLFIOS_DOCKERHUB_USER }}" \
+            --password-stdin docker.io
+
+      # wolfi-base only:
+      # Build and push image using terraform-provider-apko to Docker Hub
+      - name: Build image with apko/terraform (Docker Hub)
+        if: matrix.imageName == 'wolfi-base'
+        env:
+          TF_VAR_target_repository: docker.io/${{ env.WOLFIOS_DOCKERHUB_USER }}/${{ matrix.imageName }}
+        run: |
+          set -x
+          cd images/${{ matrix.imageName }}/
+          # Remove any terraform state from the push to GHCR
+          rm -rf .terraform* terraform*
           terraform init
           terraform apply -auto-approve
