@@ -9,6 +9,7 @@ contents:
     - gitsign
     - make
     - graphviz
+    - git
 
 entrypoint:
   command: /usr/bin/wolfictl
