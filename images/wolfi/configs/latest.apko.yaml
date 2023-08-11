@@ -1,0 +1,6 @@
+contents:
+  packages:
+    - wolfi-base
+
+cmd: /bin/sh -l
+
