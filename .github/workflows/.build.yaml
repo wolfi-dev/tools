@@ -1,0 +1,126 @@
+name: Reusable build workflow
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      melange-config:
+        required: false
+        type: string
+        default: ''
+      registry:
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  build:
+    runs-on: wolfi-builder-${{ matrix.arch }}
+    if: inputs.melange-config != ''
+    strategy:
+      fail-fast: true
+      matrix:
+        arch: ["x86_64", "aarch64"]
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+
+      # TODO: Replace this with custom wolfi image
+      - run: |
+          sudo apt update -y && \
+          sudo apt install unzip curl cmake pkg-config -y
+
+      - id: melange
+        uses: chainguard-dev/actions/melange-build@main
+        with:
+          multi-config: ${{ inputs.melange-config }}
+          empty-workspace: false
+          workdir: images/${{ inputs.image }}
+          sign-with-temporary-key: true
+          archs: ${{ matrix.arch }}
+
+      - name: 'Upload built packages archive to Github Artifacts'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.image }}-${{ matrix.arch }}
+          path: ./packages
+          retention-days: 1 # Low ttl since this is just an intermediary used once
+          if-no-files-found: error
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    if: always() && (needs.build.result == 'success' || needs.build.result == 'skipped')
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+
+      # TODO: Replace this with custom wolfi image
+      - run: |
+          sudo apt update -y && \
+          sudo apt install unzip curl git -y
+
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: '1.5.*'
+          terraform_wrapper: false
+
+      # Setup melange
+      - uses: chainguard-dev/actions/setup-melange@main
+        if: inputs.melange-config != ''
+
+      # Fetch the build stages back down
+      - name: 'Download package archives'
+        if: inputs.melange-config != ''
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.image }}-aarch64
+          path: ./packages
+
+      - name: 'Download package archives'
+        if: inputs.melange-config != ''
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.image }}-x86_64
+          path: ./packages
+
+      # Prepare the index for terraform
+      - if: inputs.melange-config != ''
+        run: |
+          # Generate a single key expected by the terraform build
+          melange keygen melange.rsa
+
+          for arch in "x86_64" "aarch64"; do
+            # Not strictly needed, but might as well while we're here
+            melange sign -k melange.rsa packages/$arch/*.apk
+
+            # Rebuild the index
+            melange index -o packages/$arch/APKINDEX.tar.gz packages/$arch/*.apk
+            melange sign-index --signing-key melange.rsa packages/$arch/APKINDEX.tar.gz
+          done
+
+      # Setup local registry
+      - uses: chainguard-dev/actions/setup-registry@main
+        if: inputs.registry == ''
+        with:
+          port: 5000
+
+      # Auth to GitHub Container Registry (ghcr.io)
+      - name: Login to registry
+        if: inputs.registry != ''
+        run: |
+          set -x
+          echo "${{ github.token }}" | docker login \
+            -u "${{ github.repository_owner }}" \
+            --password-stdin ghcr.io
+
+      # Build and push image using terraform-provider-apko
+      - name: Build image with apko/terraform
+        env:
+          # TF_VAR_target_repository: ghcr.io/${{ github.repository_owner }}/${{ matrix.imageName }}
+          TF_VAR_target_repository: ${{ inputs.registry != '' && inputs.registry || format('localhost:5000/{0}', inputs.image) }}
+        run: |
+          set -x
+          cd images/${{ inputs.image }}/
+          terraform init
+          terraform apply -auto-approve
