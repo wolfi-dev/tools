@@ -17,7 +17,8 @@ on:
 
 jobs:
   build:
-    runs-on: wolfi-builder-${{ matrix.arch }}
+    runs-on:
+      group: wolfi-builder-${{ matrix.arch }}
     if: inputs.melange-config != ''
     strategy:
       fail-fast: true
