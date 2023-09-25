@@ -67,7 +67,7 @@ pipeline:
       #yam
       git clone https://github.com/chainguard-dev/yam.git
       cd yam
-      go build -v -o  "${DESTDIR}/usr/bin/yam" ./..
+      go build -v -o  "${DESTDIR}/usr/bin/yam" .
       cd ..
 
       # sdk entrypoint
