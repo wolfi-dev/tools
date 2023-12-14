@@ -2,11 +2,11 @@ terraform {
   required_providers {
     cosign = {
       source  = "chainguard-dev/cosign"
-      version = "0.0.16"
+      version = "0.0.17"
     }
     apko = {
       source  = "chainguard-dev/apko"
-      version = "0.8.9"
+      version = "0.12.0"
     }
   }
 }
@@ -22,7 +22,7 @@ variable "extra_packages" {
 
 module "this" {
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.9"
+  version = "0.0.10"
 
   target_repository = var.target_repository
   config            = var.config

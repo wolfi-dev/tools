@@ -14,4 +14,4 @@ contents:
 entrypoint:
   command: /usr/bin/wolfictl
 
-command: -h
+cmd: -h
