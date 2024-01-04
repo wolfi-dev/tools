@@ -1,6 +1,9 @@
 on:
   pull_request:
 
+permissions:
+  contents: read # Needed to clone the repo
+
 jobs:
   alpine-base:
     uses: ./.github/workflows/.build.yaml
@@ -23,12 +26,12 @@ jobs:
     with:
       image: melange
       melange-config: configs/latest.melange.yaml
-      
+
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml
     with:
       image: musl-dynamic
-      
+
   sdk:
     uses: ./.github/workflows/.build.yaml
     with:
