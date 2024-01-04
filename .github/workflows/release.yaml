@@ -9,9 +9,9 @@ on:
 concurrency: release
 
 permissions:
-  id-token: write
-  packages: write
-  contents: read
+  contents: read  # Needed to clone the repo
+  id-token: write # Needed to sign images
+  packages: write # Needed to publish images to GHCR
 
 jobs:
   alpine-base:
@@ -39,13 +39,13 @@ jobs:
       image: melange
       melange-config: configs/latest.melange.yaml
       registry: ghcr.io/wolfi-dev/melange
-      
+
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml
     with:
       image: musl-dynamic
       registry: ghcr.io/wolfi-dev/musl-dynamic
-      
+
   sdk:
     uses: ./.github/workflows/.build.yaml
     with:
