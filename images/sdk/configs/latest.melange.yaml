@@ -22,6 +22,7 @@ package:
       - bubblewrap
       - tree
       - alpine-keys
+      - jq
 
 environment:
   contents:
