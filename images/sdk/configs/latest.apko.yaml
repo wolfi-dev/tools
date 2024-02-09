@@ -5,5 +5,9 @@ contents:
     - sdk
     - grype
 
+environment:
+  COLORTERM: truecolor
+  TERM: xterm-256color
+
 entrypoint:
   command: /usr/bin/sdk
