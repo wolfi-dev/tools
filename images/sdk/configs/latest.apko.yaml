@@ -4,6 +4,8 @@ contents:
     - wolfi-baselayout
     - sdk
     - grype
+    - apk-tools
+    - gcsfuse
 
 environment:
   COLORTERM: truecolor
