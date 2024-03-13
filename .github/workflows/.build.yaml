@@ -9,39 +9,44 @@ on:
       melange-config:
         required: false
         type: string
-        default: ''
+        default: ""
       registry:
         required: false
         type: string
-        default: ''
+        default: ""
 
 jobs:
   build:
-    runs-on:
-      group: wolfi-builder-${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
     if: inputs.melange-config != ''
     strategy:
-      fail-fast: true
       matrix:
         arch: ["x86_64", "aarch64"]
+        include:
+          - arch: x86_64
+            runner: ubuntu-latest-16-cores
+            oci: amd64
+          - arch: aarch64
+            runner: ubuntu-arm-16-cores
+            oci: arm64
+      fail-fast: true
+
     steps:
       - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
 
-      # TODO: Replace this with custom wolfi image
-      - run: |
-          sudo apt update -y && \
-          sudo apt install unzip curl cmake pkg-config -y
-
-      - id: melange
-        uses: chainguard-dev/actions/melange-build@main
+      - name: Build the package
+        uses: wolfi-dev/os/docker-run@main
         with:
-          multi-config: ${{ inputs.melange-config }}
-          empty-workspace: false
-          workdir: images/${{ inputs.image }}
-          sign-with-temporary-key: true
-          archs: ${{ matrix.arch }}
+          run: |
+            cd images/${{ inputs.image }}
 
-      - name: 'Upload built packages archive to Github Artifacts'
+            melange keygen local-melange.rsa
+            melange build ${{ inputs.melange-config }} \
+              --arch ${{ matrix.arch }} \
+              --signing-key local-melange.rsa \
+              --out-dir ../../packages/
+
+      - name: "Upload built packages archive to Github Artifacts"
         uses: actions/upload-artifact@v3
         with:
           name: ${{ inputs.image }}-${{ matrix.arch }}
@@ -63,7 +68,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: '1.5.*'
+          terraform_version: "1.5.*"
           terraform_wrapper: false
 
       # Setup melange
@@ -71,14 +76,14 @@ jobs:
         if: inputs.melange-config != ''
 
       # Fetch the build stages back down
-      - name: 'Download package archives'
+      - name: "Download package archives"
         if: inputs.melange-config != ''
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.image }}-aarch64
           path: ./packages
 
-      - name: 'Download package archives'
+      - name: "Download package archives"
         if: inputs.melange-config != ''
         uses: actions/download-artifact@v3
         with:
