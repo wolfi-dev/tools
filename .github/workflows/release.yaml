@@ -58,3 +58,21 @@ jobs:
     with:
       image: wolfictl
       registry: ghcr.io/wolfi-dev/wolfictl
+
+  static-alpibe:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: static
+      registry: ghcr.io/wolfi-dev/static
+
+  static-git:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: git
+      registry: ghcr.io/wolfi-dev/git
+
+  static-busybox:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: busybox
+      registry: ghcr.io/wolfi-dev/busybox
