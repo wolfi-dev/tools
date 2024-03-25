@@ -20,3 +20,10 @@ docker run --rm --entrypoint bash "${IMAGE_NAME}" -xc \
      melange version &&
      apko version &&
      wolfictl version'
+
+# Check that everything is up to date
+# Freshly minted image, should be fully up to date, this however will
+# catch any package renames/provides that apko resolved using out of
+# date packages, due to packaging mistakes or ongoing transitions
+docker run --rm --entrypoint bash "${IMAGE_NAME}" -xc \
+     'apk update; apk upgrade --all --latest || true'
