@@ -42,7 +42,7 @@ jobs:
           archs: ${{ matrix.arch }}
 
       - name: 'Upload built packages archive to Github Artifacts'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ matrix.arch }}
           path: ./packages
