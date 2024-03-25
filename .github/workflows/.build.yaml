@@ -42,7 +42,7 @@ jobs:
           archs: ${{ matrix.arch }}
 
       - name: 'Upload built packages archive to Github Artifacts'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.image }}-${{ matrix.arch }}
           path: ./packages
@@ -73,14 +73,14 @@ jobs:
       # Fetch the build stages back down
       - name: 'Download package archives'
         if: inputs.melange-config != ''
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.image }}-aarch64
           path: ./packages
 
       - name: 'Download package archives'
         if: inputs.melange-config != ''
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.image }}-x86_64
           path: ./packages
