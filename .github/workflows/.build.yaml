@@ -124,4 +124,15 @@ jobs:
           set -x
           cd images/${{ inputs.image }}/
           terraform init
-          terraform apply -auto-approve
+          terraform apply -auto-approve --parallelism=$(nproc) -json | tee /tmp/mega-module.tf.json | jq -r '.["@message"]'
+
+      - name: Collect TF diagnostics
+        uses: chainguard-dev/actions/terraform-diag@main
+        with:
+          json-file: /tmp/mega-module.tf.json
+
+      - name: Upload terraform logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: "mega-module-${{ inputs.image }}.tf.json"
+          path: /tmp/mega-module.tf.json
