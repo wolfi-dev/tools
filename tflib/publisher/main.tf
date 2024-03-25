@@ -2,11 +2,11 @@ terraform {
   required_providers {
     cosign = {
       source  = "chainguard-dev/cosign"
-      version = "0.0.17"
+      version = "0.0.19"
     }
     apko = {
       source  = "chainguard-dev/apko"
-      version = "0.13.0"
+      version = "0.15.2"
     }
   }
 }
@@ -20,13 +20,20 @@ variable "extra_packages" {
   default = ["wolfi-baselayout"]
 }
 
+variable "check_sbom" {
+  type        = bool
+  default     = false
+  description = "Whether to run the NTIA conformance checker over the images we produce prior to attesting the SBOMs."
+}
+
 module "this" {
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.10"
+  version = "0.0.12"
 
   target_repository = var.target_repository
   config            = var.config
   extra_packages    = var.extra_packages
+  check_sbom        = var.check_sbom
 }
 
 output "image_ref" {
