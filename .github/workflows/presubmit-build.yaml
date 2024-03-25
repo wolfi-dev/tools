@@ -42,3 +42,19 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: wolfictl
+
+  static-alpine:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: static
+
+
+  git-alpine:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: git
+
+  busybox-alpine:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: busybox
