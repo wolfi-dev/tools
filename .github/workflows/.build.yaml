@@ -121,7 +121,7 @@ jobs:
           # TF_VAR_target_repository: ghcr.io/${{ github.repository_owner }}/${{ matrix.imageName }}
           TF_VAR_target_repository: ${{ inputs.registry != '' && inputs.registry || format('localhost:5000/{0}', inputs.image) }}
         run: |
-          set -x
+          set -exo pipefail
           cd images/${{ inputs.image }}/
           terraform init
           terraform apply -auto-approve --parallelism=$(nproc) -json | tee /tmp/mega-module.tf.json | jq -r '.["@message"]'
