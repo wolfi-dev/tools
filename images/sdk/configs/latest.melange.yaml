@@ -23,6 +23,7 @@ package:
       - tree
       - alpine-keys
       - jq
+      - bincapz
 
 environment:
   contents:
