@@ -10,8 +10,8 @@ variable "target_repository" {
 }
 
 provider "apko" {
-  extra_repositories = ["https://packages.wolfi.dev/os"]
-  extra_keyring      = ["https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"]
+  extra_repositories = ["https://packages.wolfi.dev/os", "${path.module}/../../packages"]
+  extra_keyring      = ["https://packages.wolfi.dev/os/wolfi-signing.rsa.pub", "${path.module}/../../melange.rsa.pub"]
   default_archs      = ["arm64", "amd64"]
 }
 

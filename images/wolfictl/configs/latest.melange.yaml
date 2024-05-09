@@ -1,0 +1,37 @@
+package:
+  name: wolfictl
+  version: 0.0.1
+  epoch: 1
+  description: A CLI used to work with the Wolfi OSS project
+  target-architecture:
+    - all
+  copyright:
+    - paths:
+        - "*"
+      attestation: TODO
+      license: Apache-2.0
+  dependencies:
+    runtime:
+      - git
+
+environment:
+  contents:
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
+    repositories:
+      - https://packages.wolfi.dev/os
+    packages:
+      - ca-certificates-bundle
+      - build-base
+      - busybox
+      - go
+      - git
+
+pipeline:
+  - runs: |
+      set -x
+      git clone https://github.com/wolfi-dev/wolfictl.git
+      (cd wolfictl && make wolfictl)
+      mkdir -p "${{targets.destdir}}/usr/bin"
+      mv wolfictl/wolfictl "${{targets.destdir}}/usr/bin/wolfictl"
+      rm -rf wolfictl/
