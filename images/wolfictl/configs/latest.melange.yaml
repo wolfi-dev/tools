@@ -1,5 +1,5 @@
 package:
-  name: wolfictl
+  name: wolfictl-head
   version: 0.0.1
   epoch: 1
   description: A CLI used to work with the Wolfi OSS project
