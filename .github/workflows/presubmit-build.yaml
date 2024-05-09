@@ -42,6 +42,7 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: wolfictl
+      melange-config: configs/latest.melange.yaml
 
   static-alpine:
     uses: ./.github/workflows/.build.yaml

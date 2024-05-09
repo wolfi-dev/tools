@@ -2,7 +2,7 @@ contents:
   packages:
     - ca-certificates-bundle
     - wolfi-baselayout
-    - wolfictl
+    - wolfictl-head
     - coreutils
     - bash
     - busybox
