@@ -11,7 +11,7 @@ terraform {
 provider "apko" {
   alias = "alpine"
 
-  extra_repositories = ["https://dl-cdn.alpinelinux.org/alpine/edge/main"]
+  extra_repositories = ["https://dl-cdn.alpinelinux.org/alpine/edge/main", "https://dl-cdn.alpinelinux.org/alpine/edge/community"]
   # These packages match chainguard-images/static
   extra_packages = ["alpine-baselayout-data", "alpine-release", "ca-certificates-bundle"]
   // Don't build for riscv64, 386, arm/v6
