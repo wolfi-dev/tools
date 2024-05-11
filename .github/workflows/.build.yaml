@@ -17,13 +17,12 @@ on:
 
 jobs:
   build:
-    runs-on:
-      group: wolfi-builder-${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
     if: inputs.melange-config != ''
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
-        arch: ["x86_64", "aarch64"]
+        runner: ["ubuntu-latest", "ubuntu-latest-arm"]
     steps:
       - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
 
