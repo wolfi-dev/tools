@@ -24,7 +24,6 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: apko
-      melange-config: configs/latest.melange.yaml
       registry: ghcr.io/wolfi-dev/apko
 
   gcc-musl:
@@ -37,7 +36,6 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: melange
-      melange-config: configs/latest.melange.yaml
       registry: ghcr.io/wolfi-dev/melange
 
   musl-dynamic:
