@@ -1,17 +1,7 @@
 contents:
   packages:
-    - ca-certificates-bundle
-    - wolfi-baselayout
-    - wolfictl
-    - coreutils
-    - bash
     - busybox
-    - gitsign
-    - make
-    - graphviz
-    - git
 
 entrypoint:
-  command: /usr/bin/wolfictl
-
-cmd: -h
+  command: /bin/sh
+cmd: -c "echo PLEASE USE ghcr.io/wolfi-dev/sdk INSTEAD; exit 1"

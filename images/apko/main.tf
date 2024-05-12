@@ -10,8 +10,8 @@ variable "target_repository" {
 }
 
 provider "apko" {
-  extra_repositories = ["https://packages.wolfi.dev/os", "${path.module}/../../packages"]
-  extra_keyring      = ["https://packages.wolfi.dev/os/wolfi-signing.rsa.pub", "${path.module}/../../melange.rsa.pub"]
+  extra_repositories = ["https://packages.wolfi.dev/os"]
+  extra_keyring      = ["https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"]
   default_archs      = ["arm64", "amd64"]
 }
 
@@ -22,13 +22,7 @@ module "latest" {
   extra_packages    = ["wolfi-baselayout"]
 }
 
-module "test-latest" {
-  source = "./tests"
-  digest = module.latest.image_ref
-}
-
 resource "oci_tag" "version-tags" {
-  depends_on = [ module.test-latest ]
   digest_ref = module.latest.image_ref
   tag        = "latest"
 }

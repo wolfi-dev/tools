@@ -1,18 +1,7 @@
 contents:
   packages:
-    - alpine-keys
-    - ca-certificates-bundle
-    - wolfi-base
-    - bubblewrap
-    - melange-head
-
-paths:
-  - path: /work
-    type: directory
-    permissions: 0o777
-
-work-dir: /work
+    - busybox
 
 entrypoint:
-  command: /usr/bin/melange
-cmd: --help
+  command: /bin/sh
+cmd: -c "echo PLEASE USE ghcr.io/wolfi-dev/sdk INSTEAD; exit 1"

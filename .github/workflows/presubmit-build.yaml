@@ -14,7 +14,6 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: apko
-      melange-config: configs/latest.melange.yaml
 
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
@@ -25,7 +24,6 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: melange
-      melange-config: configs/latest.melange.yaml
 
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml

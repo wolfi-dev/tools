@@ -22,13 +22,7 @@ module "latest" {
   extra_packages    = ["wolfi-baselayout"]
 }
 
-module "test-latest" {
-  source = "./tests"
-  digest = module.latest.image_ref
-}
-
 resource "oci_tag" "version-tags" {
-  depends_on = [ module.test-latest ]
   digest_ref = module.latest.image_ref
   tag        = "latest"
 }
