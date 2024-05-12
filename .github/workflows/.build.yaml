@@ -17,13 +17,18 @@ on:
 
 jobs:
   build:
-    runs-on:
-      group: wolfi-builder-${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
     if: inputs.melange-config != ''
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         arch: ["x86_64", "aarch64"]
+        include:
+          - arch: "aarch64"
+            runner: "ubuntu-latest-arm"
+          - arch: "x86_64"
+            runner: "ubuntu-latest"
+
     steps:
       - uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
 
@@ -118,7 +123,6 @@ jobs:
       # Build and push image using terraform-provider-apko
       - name: Build image with apko/terraform
         env:
-          # TF_VAR_target_repository: ghcr.io/${{ github.repository_owner }}/${{ matrix.imageName }}
           TF_VAR_target_repository: ${{ inputs.registry != '' && inputs.registry || format('localhost:5000/{0}', inputs.image) }}
         run: |
           set -x
