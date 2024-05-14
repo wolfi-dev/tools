@@ -23,7 +23,7 @@ package:
       - tree
       - alpine-keys
       - jq
-      - bincapz~0.10 # TODO: use latest bincapz
+      - bincapz
 
 environment:
   contents:
