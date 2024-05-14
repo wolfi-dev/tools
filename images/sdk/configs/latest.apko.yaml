@@ -6,6 +6,7 @@ contents:
     - grype
     - apk-tools
     - gcsfuse
+    - gitsign
 
 environment:
   COLORTERM: truecolor
