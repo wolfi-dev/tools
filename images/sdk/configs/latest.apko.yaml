@@ -8,6 +8,7 @@ contents:
     - gcsfuse
     - git
     - gitsign
+    - make
 
 environment:
   COLORTERM: truecolor
