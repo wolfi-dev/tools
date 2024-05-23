@@ -10,20 +10,10 @@ jobs:
     with:
       image: alpine-base
 
-  apko:
-    uses: ./.github/workflows/.build.yaml
-    with:
-      image: apko
-
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
     with:
       image: gcc-musl
-
-  melange:
-    uses: ./.github/workflows/.build.yaml
-    with:
-      image: melange
 
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml
@@ -36,16 +26,10 @@ jobs:
       image: sdk
       melange-config: configs/latest.melange.yaml
 
-  wolfictl:
-    uses: ./.github/workflows/.build.yaml
-    with:
-      image: wolfictl
-
   static-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: static
-
 
   git-alpine:
     uses: ./.github/workflows/.build.yaml
