@@ -20,23 +20,11 @@ jobs:
       image: alpine-base
       registry: ghcr.io/wolfi-dev/alpine-base
 
-  apko:
-    uses: ./.github/workflows/.build.yaml
-    with:
-      image: apko
-      registry: ghcr.io/wolfi-dev/apko
-
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
     with:
       image: gcc-musl
       registry: ghcr.io/wolfi-dev/gcc-musl
-
-  melange:
-    uses: ./.github/workflows/.build.yaml
-    with:
-      image: melange
-      registry: ghcr.io/wolfi-dev/melange
 
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml
@@ -51,25 +39,19 @@ jobs:
       melange-config: configs/latest.melange.yaml
       registry: ghcr.io/wolfi-dev/sdk
 
-  wolfictl:
-    uses: ./.github/workflows/.build.yaml
-    with:
-      image: wolfictl
-      registry: ghcr.io/wolfi-dev/wolfictl
-
-  static-alpibe:
+  static-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: static
       registry: ghcr.io/wolfi-dev/static
 
-  static-git:
+  git-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: git
       registry: ghcr.io/wolfi-dev/git
 
-  static-busybox:
+  busybox-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: busybox
