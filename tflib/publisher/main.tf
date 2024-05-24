@@ -28,7 +28,7 @@ variable "check_sbom" {
 
 module "this" {
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.12"
+  version = "0.0.13"
 
   target_repository = var.target_repository
   config            = var.config
