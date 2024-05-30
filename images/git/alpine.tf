@@ -9,8 +9,10 @@ module "latest-alpine" {
   providers = {
     apko = apko.alpine
   }
-  for_each          = local.accounts
-  source            = "../../tflib/publisher"
+  for_each = local.accounts
+  source   = "chainguard-dev/apko/publisher"
+  version  = "0.0.12"
+
   target_repository = var.target_repository
   config            = module.alpine[each.key].config
   extra_packages    = [] // Don't add wolfi-baselayout
