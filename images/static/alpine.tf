@@ -3,7 +3,7 @@ module "alpine" {
     apko = apko.alpine
   }
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.12"
+  version = "0.0.13"
 
   target_repository = var.target_repository
   config            = file("${path.module}/configs/alpine.apko.yaml")
