@@ -1,7 +1,10 @@
 terraform {
   required_providers {
-    apko = { source = "chainguard-dev/apko" }
-    oci  = { source = "chainguard-dev/oci" }
+    apko = {
+      source                = "chainguard-dev/apko"
+      configuration_aliases = [apko.local]
+    }
+    oci = { source = "chainguard-dev/oci" }
   }
 }
 
@@ -10,12 +13,12 @@ variable "target_repository" {
 }
 
 module "latest" {
-  source  = "chainguard-dev/apko/publisher"
-  version = "0.0.12"
+  providers = { apko = apko.local }
+  source    = "chainguard-dev/apko/publisher"
+  version   = "0.0.12"
 
   target_repository = var.target_repository
   config            = file("${path.module}/configs/latest.apko.yaml")
-  extra_packages    = ["wolfi-baselayout"]
 }
 
 module "test-latest" {
