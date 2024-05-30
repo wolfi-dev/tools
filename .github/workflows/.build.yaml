@@ -126,6 +126,5 @@ jobs:
           TF_VAR_target_repository: ${{ inputs.registry != '' && inputs.registry || format('localhost:5000/{0}', inputs.image) }}
         run: |
           set -x
-          cd images/${{ inputs.image }}/
           terraform init
-          terraform apply -auto-approve
+          terraform apply -auto-approve -target=module.${{inputs.image}}
