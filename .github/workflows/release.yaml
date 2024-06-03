@@ -18,41 +18,41 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: alpine-base
-      registry: ghcr.io/wolfi-dev/alpine-base
+      registry: ghcr.io/wolfi-dev
 
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
     with:
       image: gcc-musl
-      registry: ghcr.io/wolfi-dev/gcc-musl
+      registry: ghcr.io/wolfi-dev
 
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml
     with:
       image: musl-dynamic
-      registry: ghcr.io/wolfi-dev/musl-dynamic
+      registry: ghcr.io/wolfi-dev
 
   sdk:
     uses: ./.github/workflows/.build.yaml
     with:
       image: sdk
       melange-config: configs/latest.melange.yaml
-      registry: ghcr.io/wolfi-dev/sdk
+      registry: ghcr.io/wolfi-dev
 
   static-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: static
-      registry: ghcr.io/wolfi-dev/static
+      registry: ghcr.io/wolfi-dev
 
   git-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: git
-      registry: ghcr.io/wolfi-dev/git
+      registry: ghcr.io/wolfi-dev
 
   busybox-alpine:
     uses: ./.github/workflows/.build.yaml
     with:
       image: busybox
-      registry: ghcr.io/wolfi-dev/busybox
+      registry: ghcr.io/wolfi-dev
