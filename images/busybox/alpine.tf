@@ -4,7 +4,7 @@ module "latest-alpine" {
   providers = { apko = apko.alpine }
 
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.14"
+  version = "0.0.15"
 
   target_repository = var.target_repository
   config            = module.alpine.config
