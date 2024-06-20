@@ -54,10 +54,6 @@ pipeline:
       mkdir -p "${DESTDIR}/usr/bin"
       mv "${GOPATH}/bin/goimports" "${DESTDIR}/usr/bin"
 
-      # melange
-      git clone https://github.com/chainguard-dev/melange.git
-      (cd melange && make melange install)
-
       # apko
       git clone https://github.com/chainguard-dev/apko.git
       (cd apko && make apko install)
@@ -65,6 +61,11 @@ pipeline:
       # wolfictl
       git clone https://github.com/wolfi-dev/wolfictl.git
       (cd wolfictl && make wolfictl install)
+
+      # melange
+      melange_version=$(grep melange wolfictl/go.mod | cut '-d ' -f2)
+      go install chainguard.dev/melange@$melange_version
+      mv "${GOPATH}/bin/melange" "${DESTDIR}/usr/bin"
 
       #yam
       git clone https://github.com/chainguard-dev/yam.git
