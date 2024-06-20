@@ -36,6 +36,7 @@ environment:
       - build-base
       - busybox
       - go
+      - gobump
       - git
 
 pipeline:
@@ -64,6 +65,7 @@ pipeline:
 
       # wolfictl
       git clone https://github.com/wolfi-dev/wolfictl.git
+      (cd wolfictl && gobump --packages "chainguard.dev/melange@latest")
       (cd wolfictl && make wolfictl install)
 
       #yam
