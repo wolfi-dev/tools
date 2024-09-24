@@ -13,6 +13,7 @@ contents:
     - apk-tools
     - gcsfuse
     - gitsign
+    - spdx-tools-java
 
 environment:
   COLORTERM: truecolor
