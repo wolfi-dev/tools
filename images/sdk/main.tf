@@ -19,6 +19,7 @@ module "latest" {
 
   target_repository = var.target_repository
   config            = file("${path.module}/configs/latest.apko.yaml")
+  check_sbom        = false // chainctl doesn't use SPDX compliant license
 }
 
 module "test-latest" {
