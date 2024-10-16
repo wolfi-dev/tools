@@ -16,7 +16,7 @@ module "latest" {
   providers = { apko = apko.alpine }
 
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.15"
+  version = "0.0.16"
 
   target_repository = var.target_repository
   config            = file("${path.module}/configs/latest.apko.yaml")
