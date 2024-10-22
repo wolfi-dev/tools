@@ -25,3 +25,6 @@ environment:
 
 entrypoint:
   command: /usr/bin/sdk
+
+volumes:
+  - "/var/lib/docker"
