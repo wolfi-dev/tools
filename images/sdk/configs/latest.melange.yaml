@@ -74,3 +74,5 @@ pipeline:
 
       # sdk entrypoint
       cp mount/entrypoint.sh "${DESTDIR}/usr/bin/sdk"
+
+  - uses: strip
