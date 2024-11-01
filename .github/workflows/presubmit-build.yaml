@@ -40,3 +40,8 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: busybox
+
+  spdx-tools:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: spdx-tools
