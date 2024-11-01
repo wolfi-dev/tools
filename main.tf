@@ -100,3 +100,8 @@ module "static" {
   target_repository = "${var.target_repository}/static"
   providers         = { apko.alpine = apko.alpine }
 }
+
+module "spdx-tools" {
+  source            = "./images/spdx-tools"
+  target_repository = "${var.target_repository}/spdx-tools"
+}

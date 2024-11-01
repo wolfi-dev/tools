@@ -1,0 +1,21 @@
+contents:
+  packages:
+    - busybox
+    - spdx-tools-java
+
+environment:
+  LANG: en_US.UTF-8
+  JAVA_HOME: /usr/lib/jvm/default-jvm
+
+accounts:
+  groups:
+  - gid: 65532
+    groupname: nonroot
+  users:
+  - uid: 65532
+    gid: 65532
+    username: nonroot
+  run-as: "65532"
+
+entrypoint:
+  command: /usr/bin/tools-java
