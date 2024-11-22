@@ -6,7 +6,7 @@ terraform {
     }
     apko = {
       source  = "chainguard-dev/apko"
-      version = "0.15.8"
+      version = "0.20.3"
     }
   }
 }
@@ -28,7 +28,7 @@ variable "check_sbom" {
 
 module "this" {
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.13"
+  version = "0.0.16"
 
   target_repository = var.target_repository
   config            = var.config
