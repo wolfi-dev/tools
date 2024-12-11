@@ -11,7 +11,7 @@ variable "target_repository" {
 
 module "latest" {
   source  = "chainguard-dev/apko/publisher"
-  version = "0.0.16"
+  version = "0.0.17"
 
   target_repository = var.target_repository
   config            = file("${path.module}/configs/latest.apko.yaml")
