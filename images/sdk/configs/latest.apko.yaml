@@ -6,6 +6,7 @@ contents:
   packages:
     - apk-tools
     - apko
+    - bash
     - bash-binsh
     - bash-completion
     - bubblewrap
@@ -34,8 +35,8 @@ contents:
     - gitsign
     - gitsign-config
     - gitsign-credential-cache
-    - gke-gcloud-auth-plugin
     - go
+    # - goimports
     - google-cloud-sdk
     - grype
     - helm
@@ -47,6 +48,7 @@ contents:
     - kmod-libs
     - kubectl-latest
     - less
+    - malcontent
     - man-db
     - melange
     - mount
@@ -59,6 +61,7 @@ contents:
     - sudo-rs
     - terraform
     - terraform-docs
+    - tree
     - udev
     - umount
     - util-linux-misc

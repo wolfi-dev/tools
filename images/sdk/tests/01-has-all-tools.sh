@@ -9,8 +9,7 @@ if [[ "${IMAGE_NAME}" == "unset" ]]; then
 fi
 
 docker run --rm --entrypoint bash "${IMAGE_NAME}" -xc \
-    'which goimports &&
-     tree --version &&
+    'tree --version &&
      go version &&
      make --version &&
      curl --version &&
