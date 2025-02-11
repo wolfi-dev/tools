@@ -51,14 +51,6 @@ provider "apko" {
   default_archs = length(var.archs) == 0 ? ["amd64", "arm/v7", "arm64", "ppc64le", "s390x"] : var.archs
 }
 
-provider "apko" {
-  alias = "local"
-
-  extra_repositories = ["https://packages.wolfi.dev/os", "${path.module}/packages"]
-  extra_keyring      = ["https://packages.wolfi.dev/os/wolfi-signing.rsa.pub", "${path.module}/melange.rsa.pub"]
-  default_archs      = length(var.archs) == 0 ? ["x86_64", "aarch64"] : var.archs
-}
-
 module "alpine-base" {
   source            = "./images/alpine-base"
   target_repository = "${var.target_repository}/alpine-base"
@@ -92,13 +84,11 @@ module "musl-dynamic" {
 module "sdk" {
   source            = "./images/sdk"
   target_repository = "${var.target_repository}/sdk"
-  providers         = { apko.local = apko.local }
 }
 
 module "static" {
   source            = "./images/static"
   target_repository = "${var.target_repository}/static"
-  providers         = { apko.alpine = apko.alpine }
 }
 
 module "spdx-tools" {
