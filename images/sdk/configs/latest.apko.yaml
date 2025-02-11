@@ -4,27 +4,40 @@ contents:
   keyring:
     - https://packages.cgr.dev/extras/chainguard-extras.rsa.pub
   packages:
+    - alpine-keys
+    - apk-tools
+    - apko
+    - bash
     - bash-completion
+    - bubblewrap
+    - busybox
     - ca-certificates-bundle
     - chainctl
-    - wolfi-baselayout
-    - sdk
-    - grype
-    - apk-tools
-    - gcsfuse
-    - gitsign
-    - spdx-tools-java
-    # dind support
+    - curl
     - docker
     - docker-dind
+    - git
+    - gitsign
+    - go
+    - goimports
+    - grype
+    - jq
+    - make
+    - malcontent
+    - melange
     - mount
+    - spdx-tools-java
+    - tree
+    - wolfi-baselayout
+    - wolfictl
+    - yam
 
 environment:
   COLORTERM: truecolor
   TERM: xterm-256color
 
 entrypoint:
-  command: /usr/bin/sdk
+  command: /usr/bin/bash
 
 volumes:
   - "/var/lib/docker"
