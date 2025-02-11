@@ -24,7 +24,6 @@ jobs:
     uses: ./.github/workflows/.build.yaml
     with:
       image: sdk
-      melange-config: configs/latest.melange.yaml
 
   static-alpine:
     uses: ./.github/workflows/.build.yaml
