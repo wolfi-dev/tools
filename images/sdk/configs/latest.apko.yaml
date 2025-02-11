@@ -19,6 +19,7 @@ contents:
     - git
     - gitsign
     - go
+    - goimports
     - grype
     - jq
     - make
