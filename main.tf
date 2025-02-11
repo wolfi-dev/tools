@@ -89,6 +89,7 @@ module "sdk" {
 module "static" {
   source            = "./images/static"
   target_repository = "${var.target_repository}/static"
+  providers         = { apko.alpine = apko.alpine }
 }
 
 module "spdx-tools" {
