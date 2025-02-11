@@ -4,20 +4,72 @@ contents:
   keyring:
     - https://packages.cgr.dev/extras/chainguard-extras.rsa.pub
   packages:
+    - apk-tools
+    - apko
+    - bash-binsh
     - bash-completion
+    - bubblewrap
+    - build-base
+    - busybox
+    - byobu
     - ca-certificates-bundle
     - chainctl
-    - wolfi-baselayout
-    - sdk
-    - grype
-    - apk-tools
-    - gcsfuse
-    - gitsign
-    - spdx-tools-java
-    # dind support
+    - containerd-service
+    - coreutils
+    - crane
+    - curl
+    - dbus
     - docker
+    - docker-cli
+    - docker-compose
+    - docker-credential-gcr
     - docker-dind
+    - dockerd
+    - dockerd-service
+    - e2fsprogs
+    - emacs
+    - gh
+    - git
+    - git-completion
+    - gitsign
+    - gitsign-config
+    - gitsign-credential-cache
+    - gke-gcloud-auth-plugin
+    - go
+    - google-cloud-sdk
+    - grype
+    - helm
+    - iproute2
+    - jq
+    - k3d
+    - kind
+    - kmod
+    - kmod-libs
+    - kubectl-latest
+    - less
+    - man-db
+    - melange
     - mount
+    - neovim
+    - opendoas
+    - opentofu
+    - screen
+    - sdk
+    - spdx-tools-java
+    - ssh-import-id
+    - sudo-rs
+    - terraform
+    - terraform-docs
+    - udev
+    - umount
+    - util-linux-misc
+    - vim
+    - vscode-skip-server-requirements-check
+    - wolfi-baselayout
+    - wolfictl
+    - yam
+    - yq
+    - zsh
 
 environment:
   COLORTERM: truecolor
