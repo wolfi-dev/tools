@@ -54,7 +54,6 @@ contents:
     - opendoas
     - opentofu
     - screen
-    - sdk
     - spdx-tools-java
     - ssh-import-id
     - sudo-rs
