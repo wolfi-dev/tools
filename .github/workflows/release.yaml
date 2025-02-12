@@ -20,6 +20,12 @@ jobs:
       image: alpine-base
       registry: ghcr.io/wolfi-dev
 
+  apko:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: apko
+      registry: ghcr.io/wolfi-dev
+
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
     with:

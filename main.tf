@@ -57,6 +57,11 @@ module "alpine-base" {
   providers         = { apko.alpine = apko.alpine }
 }
 
+module "apko" {
+  source            = "./images/apko"
+  target_repository = "${var.target_repository}/apko"
+}
+
 module "busybox" {
   source            = "./images/busybox"
   target_repository = "${var.target_repository}/busybox"

@@ -10,6 +10,11 @@ jobs:
     with:
       image: alpine-base
 
+  apko:
+    uses: ./.github/workflows/.build.yaml
+    with:
+      image: apko
+
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
     with:
