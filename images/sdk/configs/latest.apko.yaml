@@ -37,7 +37,7 @@ environment:
   TERM: xterm-256color
 
 entrypoint:
-  command: /usr/bin/bash
+  command: /bin/bash
 
 volumes:
   - "/var/lib/docker"
