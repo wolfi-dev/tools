@@ -41,3 +41,7 @@ entrypoint:
 
 volumes:
   - "/var/lib/docker"
+
+layering:
+  strategy: "origin"
+  budget: 20
