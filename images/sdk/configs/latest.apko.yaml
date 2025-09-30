@@ -4,7 +4,6 @@ contents:
   keyring:
     - https://packages.cgr.dev/extras/chainguard-extras.rsa.pub
   packages:
-    - alpine-keys
     - apk-tools
     - apko
     - bash
