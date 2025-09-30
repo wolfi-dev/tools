@@ -30,7 +30,7 @@ jobs:
           terraform_wrapper: false
 
       # Setup local registry
-      - uses: chainguard-dev/actions/setup-registry@3caedd3784c809ba873cbb8c6a12e2bc6bf6ab09 # v1.4.13
+      - uses: chainguard-dev/actions/setup-registry@8e97c1fc72515d627456cb0b92e9c9f299356375 # v1.5.2
         if: inputs.registry == ''
         with:
           port: 5000
