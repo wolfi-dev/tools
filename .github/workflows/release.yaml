@@ -8,62 +8,95 @@ on:
 
 concurrency: release
 
-permissions:
-  contents: read  # Needed to clone the repo
-  id-token: write # Needed to sign images
-  packages: write # Needed to publish images to GHCR
+permissions: {}
 
 jobs:
   alpine-base:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: alpine-base
       registry: ghcr.io/wolfi-dev
 
   apko:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: apko
       registry: ghcr.io/wolfi-dev
 
   gcc-musl:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: gcc-musl
       registry: ghcr.io/wolfi-dev
 
   musl-dynamic:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: musl-dynamic
       registry: ghcr.io/wolfi-dev
 
   sdk:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: sdk
       registry: ghcr.io/wolfi-dev
 
   static-alpine:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: static
       registry: ghcr.io/wolfi-dev
 
   git-alpine:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: git
       registry: ghcr.io/wolfi-dev
 
   busybox-alpine:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: busybox
       registry: ghcr.io/wolfi-dev
 
   spdx-tools:
     uses: ./.github/workflows/.build.yaml
+    permissions:
+      contents: read # Clone the repo in the reusable build workflow
+      id-token: write # Keyless image signing via cosign/OIDC
+      packages: write # Publish images to GHCR
     with:
       image: spdx-tools
       registry: ghcr.io/wolfi-dev
