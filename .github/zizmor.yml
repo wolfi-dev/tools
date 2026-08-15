@@ -1,0 +1,15 @@
+# Copyright 2026 Chainguard, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+rules:
+  # Paired with `cooldown.default-days: 3` in .github/dependabot.yaml.
+  # Pedantic persona's default cooldown threshold is 7 days; lower it to
+  # match the repo's configured cooldown.
+  dependabot-cooldown:
+    config:
+      days: 3
+  # Cosmetic pedantic-only findings — suppressed across the campaign.
+  anonymous-definition:
+    disable: true
+  concurrency-limits:
+    disable: true
