@@ -1,0 +1,10 @@
+# Copyright 2026 Chainguard, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+paths:
+  .github/workflows/**/*.{yml,yaml}:
+    ignore:
+      # actionlint doesn't understand GitHub's `$/` self-repository syntax yet
+      # (issue https://github.com/rhysd/actionlint/issues/711, fix pending in
+      # https://github.com/rhysd/actionlint/pull/732). Drop this once released.
+      - 'reusable workflow call "\$/.+" at "uses" is not following the format'
