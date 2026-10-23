@@ -47,8 +47,10 @@ provider "apko" {
   extra_repositories = ["https://dl-cdn.alpinelinux.org/alpine/edge/main"]
   extra_packages     = ["alpine-baselayout-data", "alpine-release", "ca-certificates-bundle"]
   // Don't build for riscv64, 386, arm/v6
-  // Only build for: amd64, arm/v7, arm64, ppc64le, s390x
-  default_archs = length(var.archs) == 0 ? ["amd64", "arm/v7", "arm64", "ppc64le", "s390x"] : var.archs
+  // Only build for: amd64, arm/v7, arm64, s390x
+  // TODO: re-add ppc64le once the Alpine edge ppc64le builder catches up
+  // (musl 1.2.6-r6 missing on ppc64le as of 2026-10-23).
+  default_archs = length(var.archs) == 0 ? ["amd64", "arm/v7", "arm64", "s390x"] : var.archs
 }
 
 module "alpine-base" {
