@@ -38,17 +38,20 @@ jobs:
       # Auth to GitHub Container Registry (ghcr.io)
       - name: Login to registry
         if: inputs.registry != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -x
-          echo "${{ github.token }}" | docker login \
-            -u "${{ github.repository_owner }}" \
+          echo "$GITHUB_TOKEN" | docker login \
+            -u "$GITHUB_REPOSITORY_OWNER" \
             --password-stdin ghcr.io
 
       # Build and push image using terraform-provider-apko
       - name: Build image with apko/terraform
         env:
           TF_VAR_target_repository: ${{ inputs.registry != '' && inputs.registry || format('localhost:5000/{0}', inputs.image) }}
+          IMAGE: ${{ inputs.image }}
         run: |
           set -x
           terraform init
-          terraform apply -auto-approve -target=module.${{inputs.image}}
+          terraform apply -auto-approve -target="module.${IMAGE}"
