@@ -12,7 +12,7 @@ permissions: {}
 
 jobs:
   alpine-base:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -22,7 +22,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   apko:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -32,7 +32,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   gcc-musl:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -42,7 +42,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   musl-dynamic:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -52,7 +52,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   sdk:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -62,7 +62,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   static-alpine:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -72,7 +72,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   git-alpine:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -82,7 +82,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   busybox-alpine:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC
@@ -92,7 +92,7 @@ jobs:
       registry: ghcr.io/wolfi-dev
 
   spdx-tools:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     permissions:
       contents: read # Clone the repo in the reusable build workflow
       id-token: write # Keyless image signing via cosign/OIDC

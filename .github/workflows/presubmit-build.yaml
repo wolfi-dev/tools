@@ -8,46 +8,46 @@ permissions:
 
 jobs:
   alpine-base:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: alpine-base
 
   apko:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: apko
 
   gcc-musl:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: gcc-musl
 
   musl-dynamic:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: musl-dynamic
 
   sdk:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: sdk
 
   static-alpine:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: static
 
   git-alpine:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: git
 
   busybox-alpine:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: busybox
 
   spdx-tools:
-    uses: ./.github/workflows/.build.yaml
+    uses: $/.github/workflows/.build.yaml
     with:
       image: spdx-tools
