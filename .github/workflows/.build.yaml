@@ -16,11 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
@@ -30,7 +30,7 @@ jobs:
           terraform_wrapper: false
 
       # Setup local registry
-      - uses: chainguard-dev/actions/setup-registry@e1c4977ad9cb32b12c5b222ec0134a22bec60bd5 # v1.6.25
+      - uses: chainguard-dev/actions/setup-registry@53668650c25af6e8864f1d1ddaa69ed4db4cdf09 # v1.6.42
         if: inputs.registry == ''
         with:
           port: 5000

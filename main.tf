@@ -2,15 +2,15 @@ terraform {
   required_providers {
     cosign = {
       source  = "chainguard-dev/cosign"
-      version = "0.4.8"
+      version = "0.5.6"
     }
     apko = {
       source  = "chainguard-dev/apko"
-      version = "1.2.13"
+      version = "1.2.26"
     }
     oci = {
       source  = "chainguard-dev/oci"
-      version = "0.1.6"
+      version = "0.2.3"
     }
   }
 
@@ -47,8 +47,10 @@ provider "apko" {
   extra_repositories = ["https://dl-cdn.alpinelinux.org/alpine/edge/main"]
   extra_packages     = ["alpine-baselayout-data", "alpine-release", "ca-certificates-bundle"]
   // Don't build for riscv64, 386, arm/v6
-  // Only build for: amd64, arm/v7, arm64, ppc64le, s390x
-  default_archs = length(var.archs) == 0 ? ["amd64", "arm/v7", "arm64", "ppc64le", "s390x"] : var.archs
+  // Only build for: amd64, arm/v7, arm64, s390x
+  // TODO: re-add ppc64le once the Alpine edge ppc64le builder catches up
+  // (musl 1.2.6-r6 missing on ppc64le as of 2026-10-23).
+  default_archs = length(var.archs) == 0 ? ["amd64", "arm/v7", "arm64", "s390x"] : var.archs
 }
 
 module "alpine-base" {
