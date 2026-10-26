@@ -35,8 +35,7 @@ variable "archs" {
 }
 
 provider "apko" {
-  extra_repositories = ["https://packages.wolfi.dev/os"]
-  extra_keyring      = ["https://packages.wolfi.dev/os/wolfi-signing.rsa.pub"]
+  extra_repositories = ["https://apk.cgr.dev/chainguard"]
   extra_packages     = ["wolfi-baselayout"]
   default_archs      = length(var.archs) == 0 ? ["x86_64", "aarch64"] : var.archs
 }
