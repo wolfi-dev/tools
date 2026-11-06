@@ -1,8 +1,6 @@
 contents:
   repositories:
-    - https://packages.cgr.dev/extras
-  keyring:
-    - https://packages.cgr.dev/extras/chainguard-extras.rsa.pub
+    - https://apk.cgr.dev/extra-packages
   packages:
     - apk-tools
     - apko
