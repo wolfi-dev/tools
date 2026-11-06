@@ -1,6 +1,6 @@
 contents:
   packages:
     - alpine-baselayout-data
-    - alpine-release==3 # TODO(#33): unlock this
+    - alpine-release
     - ca-certificates-bundle
-    - musl==1 # TODO(#33): unlock this
+    - musl
