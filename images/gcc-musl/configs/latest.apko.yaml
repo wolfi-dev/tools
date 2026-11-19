@@ -2,9 +2,9 @@ contents:
   packages:
     - ca-certificates-bundle
     - alpine-baselayout-data
-    - alpine-release==3
+    - alpine-release
     - gcc
-    - musl-dev==1
+    - musl-dev
     - busybox
 
 paths:
