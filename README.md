@@ -8,11 +8,9 @@ Various tools, images, etc. to support the Wolfi OSS project
   - [busybox](#busybox)
   - [gcc-musl](#gcc-musl)
   - [git](#git)
-  - [melange](#melange)
   - [musl-dynamic](#musl-dynamic)
   - [sdk](#sdk)
   - [static](#static)
-  - [wolfictl](#wolfictl)
 
 ## Images
 
@@ -61,15 +59,6 @@ ghcr.io/wolfi-dev/git:alpine-root
 
 It's intended as a replacement for `cgr.dev/chainguard/git:latest` and `cgr.dev/chainguard/git:latest-root`.
 
-### melange
-
-The [melange](./images/melange) image contains
-[melange](https://github.com/chainguard-dev/melange).
-
-```
-ghcr.io/wolfi-dev/melange:latest
-```
-
 ### musl-dynamic
 
 The [musl-dynamic](./images/musl-dynamic) image contains a musl libc built from Alpine's packages.
@@ -80,7 +69,7 @@ ghcr.io/wolfi-dev/musl-dynamic:latest
 
 ### sdk
 
-The [sdk](./images/sdk) image contains melange, apko, wolfictl and other tools such as Go needed to build these projects.
+The [sdk](./images/sdk) image contains melange, apko, wolfictl and other tools such as Go needed to build these projects. It replaces the former `melange` and `wolfictl` images, which are no longer built.
 
 ```
 ghcr.io/wolfi-dev/sdk:latest
@@ -95,12 +84,3 @@ ghcr.io/wolfi-dev/static:alpine
 ```
 
 It's intended as a replacement for `cgr.dev/chainguard/static:latest`.
-
-### wolfictl
-
-The [wolfictl](./images/wolfictl) image contains
-[wolfictl](https://github.com/wolfi-dev/wolfictl).
-
-```
-ghcr.io/wolfi-dev/wolfictl:latest
-```
