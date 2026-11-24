@@ -1,6 +1,6 @@
-# sdk
+# apko
 
-Development image for [apko](https://github.com/chainguard-dev/apko).
+Minimal image containing [apko](https://github.com/chainguard-dev/apko).
 
 ## Get It!
 

@@ -27,15 +27,7 @@ Run the image, mounting the repo workspace (`--privileged` flag required):
 docker run --privileged --rm -it -v "${PWD}:${PWD}" -w "${PWD}" ghcr.io/wolfi-dev/sdk
 ```
 
-Upon entering the image, you should see the following welcome message:
-
-```
-
-Welcome to the development environment!
-
-
-[sdk] ❯
-```
+This drops you into a `bash` shell as `root` inside the image.
 
 Inside the environment, test out local changes to the melange codebase
 by running the following:
@@ -72,15 +64,7 @@ Run the image, mounting the repo workspace:
 docker run --rm -it -v "${PWD}:${PWD}" -w "${PWD}" ghcr.io/wolfi-dev/sdk
 ```
 
-Upon entering the image, you should see the following welcome message:
-
-```
-
-Welcome to the development environment!
-
-
-[sdk] ❯
-```
+This drops you into a `bash` shell as `root` inside the image.
 
 Inside the environment, test out local changes to the apko codebase
 by running the following:
