@@ -11,6 +11,7 @@ Various tools, images, etc. to support the Wolfi OSS project
   - [melange](#melange)
   - [musl-dynamic](#musl-dynamic)
   - [sdk](#sdk)
+  - [spdx-tools](#spdx-tools)
   - [static](#static)
   - [wolfictl](#wolfictl)
 
@@ -84,6 +85,14 @@ The [sdk](./images/sdk) image contains melange, apko, wolfictl and other tools s
 
 ```
 ghcr.io/wolfi-dev/sdk:latest
+```
+
+### spdx-tools
+
+The [spdx-tools](./images/spdx-tools) image contains the [SPDX Java tools](https://github.com/spdx/tools-java) for verifying and converting SPDX documents.
+
+```
+ghcr.io/wolfi-dev/spdx-tools:latest
 ```
 
 ### static
