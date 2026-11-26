@@ -6,7 +6,7 @@ terraform {
     }
     apko = {
       source  = "chainguard-dev/apko"
-      version = "1.2.30"
+      version = "1.2.31"
     }
     oci = {
       source  = "chainguard-dev/oci"
